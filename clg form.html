@@ -1,0 +1,221 @@
+!DOCTYPE html>
+<html>
+<head>
+<title>Student CRUD</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    display:flex;
+    gap:30px;
+}
+
+.form-box{
+    width:30%;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+.table-box{
+    width:70%;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+    margin-right:5px;
+}
+
+.add{
+    background:green;
+    color:white;
+}
+
+.update{
+    background:orange;
+    color:white;
+}
+
+.edit{
+    background:blue;
+    color:white;
+}
+
+.delete{
+    background:red;
+    color:white;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid black;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#ddd;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="form-box">
+
+<h2>Student Form</h2>
+
+<input type="text" id="name" placeholder="Name">
+
+<input type="text" id="regno" placeholder="Register Number">
+
+<input type="text" id="dept" placeholder="Department">
+
+<input type="text" id="year" placeholder="Year">
+
+<button class="add" onclick="addStudent()">
+Submit
+</button>
+
+<button class="update" onclick="updateStudent()">
+Update
+</button>
+
+</div>
+
+<div class="table-box">
+
+<h2>Student Records</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Reg No</th>
+<th>Department</th>
+<th>Year</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="studentTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+let editRow = null;
+
+function addStudent(){
+
+let name = document.getElementById("name").value;
+let reg = document.getElementById("regno").value;
+let dept = document.getElementById("dept").value;
+let year = document.getElementById("year").value;
+
+if(name=="" || reg=="" || dept=="" || year==""){
+    alert("Fill all fields");
+    return;
+}
+
+let row = `
+<tr>
+<td>${name}</td>
+<td>${reg}</td>
+<td>${dept}</td>
+<td>${year}</td>
+
+<td>
+<button class="edit" onclick="editStudent(this)">Edit</button>
+<button class="delete" onclick="deleteStudent(this)">Delete</button>
+</td>
+
+</tr>
+`;
+
+document.getElementById("studentTable").innerHTML += row;
+
+clearForm();
+
+}
+
+function editStudent(btn){
+
+editRow = btn.parentElement.parentElement;
+
+document.getElementById("name").value = editRow.cells[0].innerHTML;
+document.getElementById("regno").value = editRow.cells[1].innerHTML;
+document.getElementById("dept").value = editRow.cells[2].innerHTML;
+document.getElementById("year").value = editRow.cells[3].innerHTML;
+
+}
+
+function updateStudent(){
+
+if(editRow == null){
+    alert("Select a row and click Edit first");
+    return;
+}
+
+editRow.cells[0].innerHTML = document.getElementById("name").value;
+editRow.cells[1].innerHTML = document.getElementById("regno").value;
+editRow.cells[2].innerHTML = document.getElementById("dept").value;
+editRow.cells[3].innerHTML = document.getElementById("year").value;
+
+editRow = null;
+
+clearForm();
+
+}
+
+function deleteStudent(btn){
+
+btn.parentElement.parentElement.remove();
+
+}
+
+function clearForm(){
+
+document.getElementById("name").value = "";
+document.getElementById("regno").value = "";
+document.getElementById("dept").value = "";
+document.getElementById("year").value = "";
+
+}
+
+</script>
+
+</body>
+</html>

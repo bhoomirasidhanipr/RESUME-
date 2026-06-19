@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student CRUD System</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f4f4;
+            padding:20px;
+        }
+
+        .container{
+            width:800px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+
+        h2{
+            text-align:center;
+            color:black;
+        }
+
+        input,select{
+            width:100%;
+            padding:10px;
+            margin-top:5px;
+            margin-bottom:10px;
+        }
+
+        button{
+            padding:10px 15px;
+            border:none;
+            color:white;
+            cursor:pointer;
+            margin-right:5px;
+        }
+
+        .add{
+            background:green;
+        }
+
+        table{
+            width:100%;
+            margin-top:20px;
+            border-collapse:collapse;
+        }
+
+        table,th,td{
+            border:1px solid black;
+        }
+
+        th,td{
+            padding:10px;
+            text-align:center;
+        }
+
+        .edit{
+            background:orange;
+        }
+
+        .delete{
+            background:red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Student Registration</h2>
+
+    <label>Name</label>
+    <input type="text" id="name">
+
+    <label>Register Number</label>
+    <input type="text" id="regno">
+
+    <label>Department</label>
+    <select id="dept">
+        <option>AIML</option>
+        <option>IT</option>
+        <option>ECE</option>
+        <option>AIDS</option>
+        <option>CSD</option>
+    </select>
+
+    <button class="add" onclick="addStudent()">
+        Add Student
+    </button>
+
+    <table id="studentTable">
+
+        <tr>
+            <th>Name</th>
+            <th>Reg No</th>
+            <th>Department</th>
+            <th>Actions</th>
+        </tr>
+
+    </table>
+
+</div>
+
+<script>
+
+let selectedRow = null;
+
+function addStudent()
+{
+    let name = document.getElementById("name").value;
+    let regno = document.getElementById("regno").value;
+    let dept = document.getElementById("dept").value;
+
+    if(name=="" || regno=="")
+    {
+        alert("Enter all details");
+        return;
+    }
+
+    let table = document.getElementById("studentTable");
+
+    let row = table.insertRow();
+
+    row.insertCell(0).innerHTML = name;
+    row.insertCell(1).innerHTML = regno;
+    row.insertCell(2).innerHTML = dept;
+
+    row.insertCell(3).innerHTML =
+    `<button class="edit" onclick="editStudent(this)">Edit</button>
+     <button class="delete" onclick="deleteStudent(this)">Delete</button>`;
+
+    document.getElementById("name").value="";
+    document.getElementById("regno").value="";
+}
+
+function deleteStudent(btn)
+{
+    let row = btn.parentNode.parentNode;
+    row.remove();
+}
+
+function editStudent(btn)
+{
+    selectedRow = btn.parentNode.parentNode;
+
+    document.getElementById("name").value =
+    selectedRow.cells[0].innerHTML;
+
+    document.getElementById("regno").value =
+    selectedRow.cells[1].innerHTML;
+
+    document.getElementById("dept").value =
+    selectedRow.cells[2].innerHTML;
+
+    btn.innerHTML="Update";
+    btn.onclick=function(){
+        updateStudent(this);
+    };
+}
+
+function updateStudent(btn)
+{
+    selectedRow.cells[0].innerHTML =
+    document.getElementById("name").value;
+
+    selectedRow.cells[1].innerHTML =
+    document.getElementById("regno").value;
+
+    selectedRow.cells[2].innerHTML =
+    document.getElementById("dept").value;
+
+    btn.innerHTML="Edit";
+    btn.onclick=function(){
+        editStudent(this);
+    };
+
+    document.getElementById("name").value="";
+    document.getElementById("regno").value="";
+}
+
+</script>
+
+</body>
+</html>
