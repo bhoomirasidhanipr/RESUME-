@@ -1,0 +1,62 @@
+body {
+  text-align: center;
+  font-family: Arial;
+  background: #f4f6f8;
+}
+
+h1 {
+  margin-top: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(9, 45px);
+  justify-content: center;
+  margin-top: 20px;
+  gap: 2px;
+}
+
+input {
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid #999;
+  outline: none;
+}
+
+/* Fixed cells */
+.fixed {
+  background: #dfe6e9;
+  font-weight: bold;
+}
+
+/* User input */
+.user {
+  background: #ffffff;
+}
+
+/* Error highlight */
+.error {
+  background: #ffcccc;
+}
+
+/* 3x3 box borders */
+input:nth-child(3n) {
+  border-right: 2px solid black;
+}
+
+input:nth-child(n+19):nth-child(-n+27),
+input:nth-child(n+46):nth-child(-n+54) {
+  border-bottom: 2px solid black;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+}
